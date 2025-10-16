@@ -1,1 +1,12 @@
-<Solution />
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/APIs/">
+    <Project Path="LinkDev.Talabat.APIs/LinkDev.Talabat.APIs.csproj" />
+  </Folder>
+  <Folder Name="/src/Core/" />
+  <Folder Name="/src/Infrastructure/" />
+  <Folder Name="/src/UI/" />
+  <Folder Name="/src/UI/Client/" />
+  <Folder Name="/src/UI/Dashboard/" />
+  <Folder Name="/test/" />
+</Solution>
