@@ -1,10 +1,9 @@
-using LinkDev.Talabat.APIs.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LinkDev.Talabat.APIs.Controllers
 {
     [ApiController]
-    [Route("api/v1/[controller]")]
+    [Route("/api/v1/[controller]")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]
