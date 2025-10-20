@@ -1,6 +1,7 @@
 ﻿using LinkDev.Talabat.Domain.Entities.Products;
 using LinkDev.Talabat.Domain.Entities.Products.Products;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
@@ -10,6 +11,14 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
         {
 
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            //modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+            //modelBuilder.ApplyConfigurationsFromAssembly(typeof(StoreContext).Assembly);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly);
+        }
+
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> Brands { get; set; }
         public DbSet<ProductCategory> Categories { get; set; }
