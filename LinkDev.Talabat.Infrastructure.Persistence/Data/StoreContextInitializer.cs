@@ -1,15 +1,26 @@
-﻿using System;
+﻿using LinkDev.Talabat.Domain.Contracts;
+using LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds
+namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
-    public static class StoreContextSeed
+    internal class StoreContextInitializer( StoreContext dbContext) : IStoreContextInitializer
     {
-        public static async Task SeedAsync(this StoreContext dbContext)
+
+        public async Task InitializeOrUpdateAsync()
+        {
+            if (dbContext.Database.GetPendingMigrations().Any())
+                await dbContext.Database.MigrateAsync(); //Update-Database
+
+        }
+
+        public async Task SeedDataAsync()
         {
 
             if (!dbContext.Brands.Any())
@@ -40,7 +51,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds
             if (!dbContext.Products.Any())
             {
                 var productsData = await File.ReadAllTextAsync($"../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/Products/products.json");
-                var products = JsonSerializer.Deserialize<List<Product>>(productsData,new JsonSerializerOptions()
+                var products = JsonSerializer.Deserialize<List<Product>>(productsData, new JsonSerializerOptions()
                 {
                     Converters = { new CustomProductJsonConverter() }
                 }) ?? [];
@@ -52,5 +63,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds
 
             }
         }
+
+
     }
 }
