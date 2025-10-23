@@ -7,6 +7,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
     public class StoreContext : DbContext
     {
+ 
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
 
