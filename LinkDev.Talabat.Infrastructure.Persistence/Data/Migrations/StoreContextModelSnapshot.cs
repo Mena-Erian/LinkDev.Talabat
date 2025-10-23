@@ -22,7 +22,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("LinkDev.Talabat.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("LinkDev.Talabat.Domain.Entities.Products.ProductSeedDto", b =>
                 {
                     b.Property<string>("Id")
                         .ValueGeneratedOnAdd()
@@ -136,7 +136,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Migrations
                     b.ToTable("Brands");
                 });
 
-            modelBuilder.Entity("LinkDev.Talabat.Domain.Entities.Products.Product", b =>
+            modelBuilder.Entity("LinkDev.Talabat.Domain.Entities.Products.ProductSeedDto", b =>
                 {
                     b.HasOne("LinkDev.Talabat.Domain.Entities.Products.Products.ProductBrand", "Brand")
                         .WithMany("Products")

@@ -1,6 +1,7 @@
 
 using LinkDev.Talabat.Infrastructure.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
+using LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
@@ -28,8 +29,8 @@ namespace LinkDev.Talabat.APIs
             #endregion
 
             var app = webApplicationBuilder.Build();
-            
-            #region Apply Any Pending Migrations - Update Database
+
+            #region Apply Any Pending Migrations - Update Database And Data Seeding
             using var scope = app.Services.CreateAsyncScope();
             var StoreContext = scope.ServiceProvider.GetRequiredService<StoreContext>();
             // Ask Runtime Env For an Object from "Store Context" Service Explicitly.
@@ -40,13 +41,15 @@ namespace LinkDev.Talabat.APIs
             {// TrustedServerCertificate
                 if (StoreContext.Database.GetPendingMigrations().Any())
                     await StoreContext.Database.MigrateAsync(); //Update-Database
+
+                await StoreContext.SeedAsync();
             }
             catch (Exception ex)
             {
                 var logger = loggerFactory.CreateLogger<Program>();
 
-                logger.LogError(ex.Message, "An Error has been occurred during applying the migrations.");
-            } 
+                logger.LogError(ex.Message, "An Error has been occurred during applying the migrations Or The Data Seeding.");
+            }
             #endregion
 
             #region Configure Kestrel Middlewates

@@ -23,8 +23,8 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Configs.Products
             builder.Property(p => p.Price)
                 .HasColumnType("decimal(9,2)");
 
-            // Product M to 1 Category
-            // Product M to 1 Brand
+            // ProductSeedDto M to 1 Category
+            // ProductSeedDto M to 1 Brand
 
             builder.HasOne(p => p.Category).WithMany(p => p.Products)
                 .HasForeignKey(p => p.CategoryId).OnDelete(DeleteBehavior.SetNull);

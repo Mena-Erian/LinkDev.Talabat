@@ -1,0 +1,26 @@
+[
+  {
+    "Id": 0,
+    "Name": "Italian",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Mexican",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Indian",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Chinese",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  }
+]
