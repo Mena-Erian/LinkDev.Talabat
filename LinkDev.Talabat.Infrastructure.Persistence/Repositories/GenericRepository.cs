@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
 {
-    internal class GeneracRepository<TEntity, TKey>(StoreContext storeContext) : IGenericRepository<TEntity, TKey>
+    internal class GenericRepository<TEntity, TKey>(StoreContext storeContext) : IGenericRepository<TEntity, TKey>
         where TEntity : Domain.Common.BaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
