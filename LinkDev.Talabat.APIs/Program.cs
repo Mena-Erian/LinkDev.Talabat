@@ -1,5 +1,6 @@
 
 using LinkDev.Talabat.APIs.Extensions;
+using LinkDev.Talabat.Application;
 using LinkDev.Talabat.Domain.Contracts;
 using LinkDev.Talabat.Infrastructure.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
@@ -27,6 +28,7 @@ namespace LinkDev.Talabat.APIs
             webApplicationBuilder.Services.AddSwaggerGen();
 
             webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
+            webApplicationBuilder.Services.AddApplicationServices();
 
             #endregion
 
