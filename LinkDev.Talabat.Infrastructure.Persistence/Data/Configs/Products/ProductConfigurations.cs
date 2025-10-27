@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Configs.Products
 {
     internal class ProductConfigurations
-        : BaseAuditableEntityConfigurations<string, Product>
+        : BaseAuditableEntityConfigurations<Product, string>
     {
         public override void Configure(EntityTypeBuilder<Product> builder)
         {
