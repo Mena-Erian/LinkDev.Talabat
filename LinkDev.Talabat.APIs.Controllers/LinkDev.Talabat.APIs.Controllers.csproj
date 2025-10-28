@@ -10,4 +10,8 @@
     <ProjectReference Include="..\LinkDev.Talabat.Application.Abstraction\LinkDev.Talabat.Application.Abstraction.csproj" />
   </ItemGroup>
 
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
 </Project>

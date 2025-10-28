@@ -16,6 +16,8 @@ namespace LinkDev.Talabat.Domain.Contracts
         void Update(TEntity entity);
         void Delete(TEntity entity);
 
+        Task<int> DeleteAllAsync();
+
         //Task UpdateAsync(TEntity entity);
 
         //Task DeleteAsync(TEntity entity);

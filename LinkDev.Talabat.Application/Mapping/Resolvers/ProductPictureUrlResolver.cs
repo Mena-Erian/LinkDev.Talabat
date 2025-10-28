@@ -11,14 +11,15 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Application.Mapping.Resolvers
 {
-    internal class ProductPictureUrlResolver(IConfiguration config) : IValueResolver<Product, ProductToReturnDto, string>
+    internal class ProductPictureUrlResolver(IConfiguration config) : IValueResolver<Product, ProductToReturnDto, string?>
     {
-        public string Resolve(Product source, ProductToReturnDto destination, string destMember, ResolutionContext context)
+        public string? Resolve(Product source, ProductToReturnDto destination, string? destMember, ResolutionContext context)
         {
             if (!string.IsNullOrEmpty(source.PictureUrl))
-                return $"{config["URLs:ApiBaseUrl"]}/{source.PictureUrl}";
+                return $"{config["URLs:ApiBaseUrl"]}/{config["FolderPaths:Images"]}/{source.PictureUrl}";
 
-            return string.Empty;
+            return null;
         }
     }
 }
+    

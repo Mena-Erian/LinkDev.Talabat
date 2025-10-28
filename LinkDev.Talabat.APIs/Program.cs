@@ -1,4 +1,5 @@
 
+using LinkDev.Talabat.APIs.Controllers;
 using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.Application;
 using LinkDev.Talabat.Domain.Contracts;
@@ -7,6 +8,7 @@ using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.APIs
@@ -21,7 +23,9 @@ namespace LinkDev.Talabat.APIs
             #region Configure Service
             // Add services to the container.
 
-            webApplicationBuilder.Services.AddControllers(); // Register Required Services by ASP.NET Core Web APIs to DI Container
+            webApplicationBuilder.Services
+                .AddControllers() // Register Required Services by ASP.NET Core Web APIs to DI Container
+                .AddApplicationPart(typeof(AssemblyControllersInformation).Assembly); // To make sure that Controllers from other assemblies are registered, but it already see it by default.
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer();
@@ -40,7 +44,7 @@ namespace LinkDev.Talabat.APIs
 
             #endregion
 
-              
+
             #region Configure Kestrel Middlewates
             // Configure the HTTP request pipeline.
 

@@ -3,6 +3,7 @@ using LinkDev.Talabat.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Application.Abstraction.Services.Products;
 using LinkDev.Talabat.Domain.Contracts;
 using LinkDev.Talabat.Domain.Entities.Products;
+using LinkDev.Talabat.Domain.Entities.Products.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,19 +17,15 @@ namespace LinkDev.Talabat.Application.Services.Products
         public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync()
             => mapper.Map<IEnumerable<ProductToReturnDto>>(await unitOfWork.GetRepository<Product, string>().GetAllAsync());
 
-        public Task<ProductToReturnDto> GetProductAsync(string id)
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<ProductToReturnDto?> GetProductAsync(string id)
+            => mapper.Map<ProductToReturnDto>(await unitOfWork.GetRepository<Product, string>().GetAsync(id));
 
-        public Task<IEnumerable<BrandDto>> GetBrandsAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<IEnumerable<BrandDto>> GetBrandsAsync()
+            => mapper.Map<IEnumerable<BrandDto>>(await unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync());
+        public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
+            => mapper.Map<IEnumerable<CategoryDto>>(await unitOfWork.GetRepository<ProductCategory, int>().GetAllAsync());
 
-        public Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
-        {
-            throw new NotImplementedException();
-        }
+        public async Task<int> DeleteAllProductAsync()
+            => await unitOfWork.GetRepository<Product, string>().DeleteAllAsync();
     }
 }

@@ -21,7 +21,7 @@ namespace LinkDev.Talabat.Application.Mapping.Profiles
                 .ForMember(d => d.Category, o => o.MapFrom(src => src.Category!.Name))
                 //.ForMember(d => d.PictureUrl, o => o.MapFrom(src => $"{"url.."}{src.PictureUrl}"))
                 .ForMember(d => d.PictureUrl, o => o.MapFrom<ProductPictureUrlResolver>());
-            ;
+
 
             CreateMap<ProductBrand, BrandDto>();
             CreateMap<ProductCategory, CategoryDto>();

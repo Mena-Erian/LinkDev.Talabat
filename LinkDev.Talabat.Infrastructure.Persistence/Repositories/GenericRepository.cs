@@ -27,5 +27,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
         public void Delete(TEntity entity) => _dbSet.Remove(entity);
 
         public void Update(TEntity entity) => _dbSet.Update(entity);
+
+        public async Task<int> DeleteAllAsync() => await _dbSet.ExecuteDeleteAsync();
     }
 }
