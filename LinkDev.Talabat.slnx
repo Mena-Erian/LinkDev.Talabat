@@ -1,1 +1,27 @@
-<Solution />
+<Solution>
+  <Folder Name="/src/" />
+  <Folder Name="/src/APIs/">
+    <Project Path="LinkDev.Talabat.APIs.Controllers/LinkDev.Talabat.APIs.Controllers.csproj" Id="2a61b978-77ad-4e8e-8dcf-a0ef9ecefb06" />
+    <Project Path="LinkDev.Talabat.APIs/LinkDev.Talabat.APIs.csproj" Id="b3b9078b-a3c4-49c2-a5cb-1a695c873f13" />
+  </Folder>
+  <Folder Name="/src/Core/">
+    <Project Path="LinkDev.Talabat.Application.Abstraction/LinkDev.Talabat.Application.Abstraction.csproj" Id="a91cf824-bcec-4abb-98e7-4519491091e0" />
+    <Project Path="LinkDev.Talabat.Application/LinkDev.Talabat.Application.csproj" Id="8b0dabf7-921a-4a32-ae93-7ead0940e995" />
+    <Project Path="LinkDev.Talabat.Domain/LinkDev.Talabat.Domain.csproj" Id="79d55e63-71b8-48ce-b2de-657c39c2870a" />
+  </Folder>
+  <Folder Name="/src/Infrastructure/">
+    <Project Path="LinkDev.Talabat.Infrastructure.Persistence/LinkDev.Talabat.Infrastructure.Persistence.csproj" Id="c6c8ef50-631f-4eb7-a442-d6f93f0ae019" />
+    <Project Path="LinkDev.Talabat.Infrastructure/LinkDev.Talabat.Infrastructure.csproj" Id="017d4339-7ccb-4cc5-8062-f8fbf2b4a7f8" />
+  </Folder>
+  <Folder Name="/src/UI/" />
+  <Folder Name="/src/UI/Client/">
+    <Project Path="LinkDev.Talabat.Client/LinkDev.Talabat.Client.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
+  <Folder Name="/src/UI/Dashboard/">
+    <Project Path="LinkDev.Talabat.Dashboard/LinkDev.Talabat.Dashboard.csproj" Id="3ab3649a-df8b-4fee-9472-7c7606750f94" />
+  </Folder>
+  <Folder Name="/test/" />
+</Solution>

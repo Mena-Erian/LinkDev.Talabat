@@ -1,0 +1,38 @@
+[
+  {
+    "Id": 0,
+    "Name": "Chicken",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Seafood",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Pasta and Noodles",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Soup",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Desserts",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  },
+  {
+    "Id": 0,
+    "Name": "Vegetable",
+    "CreatedBy": "1",
+    "LastModifiedBy": "1"
+  }
+]
