@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using LinkDev.Talabat.Application.Abstraction.Services;
-using LinkDev.Talabat.Application.Profiles;
+using LinkDev.Talabat.Application.Mapping.Profiles;
 using LinkDev.Talabat.Application.Services;
 using System;
 using System.Collections.Generic;

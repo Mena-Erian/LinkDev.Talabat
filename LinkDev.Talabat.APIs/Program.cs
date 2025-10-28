@@ -40,7 +40,7 @@ namespace LinkDev.Talabat.APIs
 
             #endregion
 
-
+              
             #region Configure Kestrel Middlewates
             // Configure the HTTP request pipeline.
 
@@ -53,6 +53,8 @@ namespace LinkDev.Talabat.APIs
             app.UseHttpsRedirection();
 
             //app.UseAuthorization();
+
+            app.UseStaticFiles();
 
             app.MapControllers();
             #endregion
