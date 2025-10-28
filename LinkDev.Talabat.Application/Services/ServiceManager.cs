@@ -2,7 +2,7 @@
 using LinkDev.Talabat.Application.Abstraction.Services;
 using LinkDev.Talabat.Application.Abstraction.Services.Products;
 using LinkDev.Talabat.Application.Services.Products;
-using LinkDev.Talabat.Domain.Contracts;
+using LinkDev.Talabat.Domain.Contracts.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;

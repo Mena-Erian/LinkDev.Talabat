@@ -1,5 +1,5 @@
 ﻿using LinkDev.Talabat.Domain.Common;
-using LinkDev.Talabat.Domain.Contracts;
+using LinkDev.Talabat.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Repositories;
 using System;
