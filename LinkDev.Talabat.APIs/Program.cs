@@ -48,19 +48,24 @@ namespace LinkDev.Talabat.APIs
             #region Configure Kestrel Middlewates
             // Configure the HTTP request pipeline.
 
+            //app.UseAuthorization();
+
+            // Routing Middleware should be placed before any middleware that depends on routing decisions
+            app.UseRouting();
+
+            app.UseStaticFiles();
+
+            app.UseHttpsRedirection();
+
+
             if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
-            //app.UseAuthorization();
-
-            app.UseStaticFiles();
-
             app.MapControllers();
+           
             #endregion
 
             app.Run();

@@ -17,8 +17,18 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
         public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProductsAsync()
             => Ok(await serviceManager.ProductService.GetProductsAsync());
 
-        //[HttpGet("{id}")]  // GET: /api/Products/{id}] 
-        //public async Task<ActionResult<ProductToReturnDto>> GetProductByIdAsync(Guid id)
+        [HttpGet("{id}")]  // GET: /api/Products/{id}] 
+        public async Task<ActionResult<ProductToReturnDto>> GetProductByIdAsync(string id)
+            => Ok(await serviceManager.ProductService.GetProductAsync(id));
+
+
+        [HttpGet("brands")] // GET: /api/Products/brands
+        public async Task<ActionResult<IEnumerable<BrandDto>>> GetBrandsAsync()
+            => Ok(await serviceManager.ProductService.GetBrandsAsync());
+
+        [HttpGet("categories")] // GET: /api/Products/categories
+        public async Task<ActionResult<IEnumerable<CategoryDto>>> GetCategoriesAsync()
+            => Ok(await serviceManager.ProductService.GetCategoriesAsync());
 
         [HttpDelete("DeleteAllProducts")]
         public async Task<ActionResult> DeleteAllAsync()
