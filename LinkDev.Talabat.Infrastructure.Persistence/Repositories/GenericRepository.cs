@@ -1,5 +1,6 @@
 ﻿using LinkDev.Talabat.Domain.Contracts;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,19 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
         private readonly DbSet<TEntity> _dbSet = storeContext.Set<TEntity>();
 
         public async Task<IEnumerable<TEntity>> GetAllAsync(bool withTracking = false)
-        => withTracking ? await _dbSet.ToListAsync() : await _dbSet.AsNoTracking().ToListAsync();
+        {
+            // Note: This is a temporary workaround to include navigation properties for Product entity.
+            // The proper solution would be to implement specification pattern or expression-based includes.
+            // we will implement it later.
+            if (typeof(TEntity) == typeof(Product))
+                return withTracking ?
+                   (IEnumerable<TEntity>)await storeContext.Set<Product>().Include<Product, ProductCategory?>(P => P.Category).Include<Product, ProductBrand?>(P => P.Brand).ToListAsync()
+                 : (IEnumerable<TEntity>)await storeContext.Set<Product>().Include<Product, ProductCategory?>(P => P.Category).Include<Product, ProductBrand?>(P => P.Brand).AsNoTracking().ToListAsync();
+
+            return withTracking ?
+                await _dbSet.ToListAsync() :
+                await _dbSet.AsNoTracking().ToListAsync();
+        }
 
         public async Task<TEntity?> GetAsync(TKey id)
          => await _dbSet.FindAsync(id);
