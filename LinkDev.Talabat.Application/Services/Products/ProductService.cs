@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using LinkDev.Talabat.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Application.Abstraction.Services.Products;
+using LinkDev.Talabat.Application.Specifications;
 using LinkDev.Talabat.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Domain.Entities.Products;
 using LinkDev.Talabat.Domain.Entities.Products.Products;
@@ -15,10 +16,17 @@ namespace LinkDev.Talabat.Application.Services.Products
     internal class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService
     {
         public async Task<IEnumerable<ProductToReturnDto>> GetProductsAsync()
-            => mapper.Map<IEnumerable<ProductToReturnDto>>(await unitOfWork.GetRepository<Product, string>().GetAllAsync());
+            => mapper.Map<IEnumerable<ProductToReturnDto>>(await unitOfWork.GetRepository<Product, string>()
+                .GetAllWithSpecsAsync(new ProductWithBrandAndCategorySpecifications()));
+        //public async Task<IEnumerable<ProductToReturnDto>> GetProductsWithSpecsAsync()
+        //   => mapper.Map<IEnumerable<ProductToReturnDto>>(await unitOfWork.GetRepository<Product, string>()
+        //       .GetAllWithSpecsAsync(specifications: new ProductWithBrandAndCategorySpecifications()));
 
         public async Task<ProductToReturnDto?> GetProductAsync(string id)
-            => mapper.Map<ProductToReturnDto>(await unitOfWork.GetRepository<Product, string>().GetAsync(id));
+            => mapper.Map<ProductToReturnDto>(await unitOfWork.GetRepository<Product, string>().GetWithSpecsAsync(new ProductWithBrandAndCategorySpecifications(id)));
+
+        //public async Task<ProductToReturnDto?> GetProductWithSpecAsync(string id)
+        //    => mapper.Map<ProductToReturnDto>(await unitOfWork.GetRepository<Product, string>().GetWithSpecsAsync(new ProductWithBrandAndCategorySpecifications(id)));
 
         public async Task<IEnumerable<BrandDto>> GetBrandsAsync()
             => mapper.Map<IEnumerable<BrandDto>>(await unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync());

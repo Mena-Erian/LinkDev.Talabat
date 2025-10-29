@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -12,7 +13,9 @@ namespace LinkDev.Talabat.Domain.Contracts
         where TKey : IEquatable<TKey>
     {
         //public Expression<Predicate<TEntity>> Criteria { get; set; }  // P => P.Id == id
-        public Expression<Func<TEntity, bool>>? Criteria { get; set; } // P => P.Id == id
-        public List<Expression<Func<TEntity, object>>> Includes { get; set; }
+        public Expression<Func<TEntity, bool>>? Criteria { get; } // P => P.Id == id
+        public List<Expression<Func<TEntity, object>>> IncludeExpression { get; }
+
+        public void AddIncludes(Expression<Func<TEntity, object>> Include);
     }
 }

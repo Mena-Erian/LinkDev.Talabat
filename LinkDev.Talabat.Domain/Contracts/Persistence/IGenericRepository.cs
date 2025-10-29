@@ -15,12 +15,18 @@ namespace LinkDev.Talabat.Domain.Contracts.Persistence
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
-
         Task<int> DeleteAllAsync();
 
-        //Task UpdateAsync(TEntity entity);
 
+        //Task UpdateAsync(TEntity entity);
         //Task DeleteAsync(TEntity entity);
+
+        #region Specifications 
+
+        Task<IEnumerable<TEntity>> GetAllWithSpecsAsync(ISpecifications<TEntity, TKey> specifications, bool withTracking = false);
+        Task<TEntity?> GetWithSpecsAsync(ISpecifications<TEntity, TKey> specifications);
+
+        #endregion
 
     }
 }

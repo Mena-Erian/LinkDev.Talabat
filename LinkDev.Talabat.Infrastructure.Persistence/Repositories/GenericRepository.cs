@@ -1,4 +1,6 @@
-﻿using LinkDev.Talabat.Domain.Contracts.Persistence;
+﻿using LinkDev.Talabat.Domain.Common;
+using LinkDev.Talabat.Domain.Contracts;
+using LinkDev.Talabat.Domain.Contracts.Persistence;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
 {
     internal class GenericRepository<TEntity, TKey>(StoreContext storeContext) : IGenericRepository<TEntity, TKey>
-        where TEntity : Domain.Common.BaseEntity<TKey>
+        where TEntity : BaseEntity<TKey>
         where TKey : IEquatable<TKey>
     {
 
@@ -47,5 +49,17 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
         public void Update(TEntity entity) => _dbSet.Update(entity);
 
         public async Task<int> DeleteAllAsync() => await _dbSet.ExecuteDeleteAsync();
+
+
+        #region Specifications 
+
+        public async Task<IEnumerable<TEntity>> GetAllWithSpecsAsync(ISpecifications<TEntity, TKey> specifications,
+            bool withTracking = false)
+            => await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbSet, specifications).ToListAsync();
+
+        public async Task<TEntity?> GetWithSpecsAsync(ISpecifications<TEntity, TKey> specifications)
+           => await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbSet, specifications).FirstOrDefaultAsync();
+
+        #endregion
     }
 }
