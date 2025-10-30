@@ -15,7 +15,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Employees
         public async Task<ActionResult> GetAllEmployeeAsync()
             => Ok(await serviceManager.EmployeeService.GetAllEmployeesAsync());
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<ActionResult> GetEmployeeAsync(string id)
             => Ok(await serviceManager.EmployeeService.GetEmployeeAsync(id));
     }

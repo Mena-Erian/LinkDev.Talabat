@@ -29,8 +29,9 @@ namespace LinkDev.Talabat.Application.Mapping.Profiles
                 .ForMember(d => d.DepartmentName, opt => opt.MapFrom(src => src.Department!.Name))
                 .ReverseMap();
             CreateMap<Department, DepartmentResultDto>()
-                .ForMember(d => d.EmployeesNames, opt => opt.MapFrom(src => src.Employees))
+                .ForMember(d => d.EmployeesNames, opt => opt.MapFrom(src => src.Employees != null ? src.Employees.Select(e => e.Name).ToList() : new List<string>()))
                 .ReverseMap();
+
         }
     }
 }

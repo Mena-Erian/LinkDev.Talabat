@@ -12,11 +12,11 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Departments
     public class DepartmentController(IServiceManager serviceManager) : BaseApiController
     {
         [HttpGet]
-        public async Task<ActionResult> GetAllEmployeeAsync()
+        public async Task<ActionResult> GetAllDepartmentsAsync()
             => Ok(await serviceManager.DepartmentService.GetAllDepartmentsAsync());
 
-        [HttpGet("id")]
-        public async Task<ActionResult> GetEmployeeAsync(int id)
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult> GetDepartmentAsync(int id)
             => Ok(await serviceManager.DepartmentService.GetDepartmentAsync(id));
 
     }

@@ -14,4 +14,6 @@ namespace LinkDev.Talabat.Domain.Entities.Departments
 
         public virtual IEnumerable<Employee>? Employees { get; set; }
     }
+
+
 }
