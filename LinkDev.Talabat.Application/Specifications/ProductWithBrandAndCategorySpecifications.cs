@@ -23,8 +23,8 @@ namespace LinkDev.Talabat.Application.Specifications
 
         private void AddBrandAndCategoryIncludes()
         {
-            AddIncludes(p => p.Brand);
-            AddIncludes(p => p.Category);
+            AddIncludes(p => p.Brand!);
+            AddIncludes(p => p.Category!);
         }
     }
 }

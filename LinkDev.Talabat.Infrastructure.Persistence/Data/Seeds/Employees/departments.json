@@ -1,0 +1,29 @@
+[
+  {
+    "Id": 0,
+    "Name": "Engineering",
+    "CreationDate": "2025-01-01",
+    "CreatedBy": "System",
+    "CreatedOn": "2025-01-01T09:00:00Z",
+    "LastModifiedBy": "System",
+    "LastModifiedOn": "2025-01-01T09:00:00Z"
+  },
+  {
+    "Id": 0,
+    "Name": "Human Resources",
+    "CreationDate": "2025-01-01",
+    "CreatedBy": "System",
+    "CreatedOn": "2025-01-01T09:00:00Z",
+    "LastModifiedBy": "System",
+    "LastModifiedOn": "2025-01-01T09:00:00Z"
+  },
+  {
+    "Id": 0,
+    "Name": "Sales",
+    "CreationDate": "2025-01-01",
+    "CreatedBy": "System",
+    "CreatedOn": "2025-01-01T09:00:00Z",
+    "LastModifiedBy": "System",
+    "LastModifiedOn": "2025-01-01T09:00:00Z"
+  }
+]

@@ -30,7 +30,7 @@ namespace LinkDev.Talabat.Application.Specifications
             Criteria = criteria;
         }
 
-        public void AddIncludes(Expression<Func<TEntity, object>> Include)
+        public virtual void AddIncludes(Expression<Func<TEntity, object>> Include)
         {
             if (Include != null)
                 IncludeExpression.Add(Include);

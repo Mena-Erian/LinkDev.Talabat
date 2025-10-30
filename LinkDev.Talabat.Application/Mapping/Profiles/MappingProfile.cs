@@ -1,13 +1,12 @@
 ﻿using AutoMapper;
+using LinkDev.Talabat.Application.Abstraction.Models.Departments;
+using LinkDev.Talabat.Application.Abstraction.Models.Employees;
 using LinkDev.Talabat.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Application.Mapping.Resolvers;
+using LinkDev.Talabat.Domain.Entities.Departments;
+using LinkDev.Talabat.Domain.Entities.Employees;
 using LinkDev.Talabat.Domain.Entities.Products;
 using LinkDev.Talabat.Domain.Entities.Products.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Application.Mapping.Profiles
 {
@@ -25,6 +24,13 @@ namespace LinkDev.Talabat.Application.Mapping.Profiles
 
             CreateMap<ProductBrand, BrandDto>();
             CreateMap<ProductCategory, CategoryDto>();
+
+            CreateMap<Employee, EmployeeResultDto>()
+                .ForMember(d => d.DepartmentName, opt => opt.MapFrom(src => src.Department!.Name))
+                .ReverseMap();
+            CreateMap<Department, DepartmentResultDto>()
+                .ForMember(d => d.EmployeesNames, opt => opt.MapFrom(src => src.Employees))
+                .ReverseMap();
         }
     }
 }
