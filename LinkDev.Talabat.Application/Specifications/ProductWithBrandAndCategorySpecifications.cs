@@ -17,24 +17,31 @@ namespace LinkDev.Talabat.Application.Specifications
             AddBrandAndCategoryIncludes();
         }
 
-        public ProductWithBrandAndCategorySpecifications(string id) : base(id)
+        public ProductWithBrandAndCategorySpecifications(string id) : base(p => p.Id == id)
         {
             AddBrandAndCategoryIncludes();
         }
 
-        public ProductWithBrandAndCategorySpecifications(string? sort, bool IsAscending = true) : this()
+        public ProductWithBrandAndCategorySpecifications(string? sort, bool? isDescending, int? brandId, int? categoryId) : base(
+                p =>
+                (!brandId.HasValue || p.BrandId == brandId.Value)
+                &&
+                (!categoryId.HasValue || p.CategoryId == categoryId.Value)
+            )
         {
+            AddBrandAndCategoryIncludes();
+
             if (sort is not null)
             {
-                AddSorting(sort, IsAscending);
+                AddSorting(sort, isDescending ?? default);
             }
         }
 
         #region Helper Methods
-        private protected override void AddSorting(string sort, bool IsAscending)
+        private protected override void AddSorting(string sort, bool isDescending)
         {
             //base.AddSorting(sort, IsAscending); // I Don't Need to Call the base
-            if (IsAscending)
+            if (!isDescending)
             {
                 switch (sort/*.ToLower()*/) // Be Checked Later
                 {

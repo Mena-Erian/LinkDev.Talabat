@@ -13,7 +13,7 @@ namespace LinkDev.Talabat.Application.Specifications
         {
             AddIncludes(e => e.Department!);
         }
-        public EmployeeWithDepartmentSpecifications(string id) : base(id)
+        public EmployeeWithDepartmentSpecifications(string id) : base(e => e.Id == id)
         {
             AddIncludes(e => e.Department!);
         }

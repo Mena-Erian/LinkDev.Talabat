@@ -15,10 +15,10 @@ namespace LinkDev.Talabat.Application.Services.Products
 {
     internal class ProductService(IUnitOfWork unitOfWork, IMapper mapper) : IProductService
     {
-        public async Task<IEnumerable<ProductToReturnDto>> GetAllProductsAsync(string? sort, bool IsAscending = true)
+        public async Task<IEnumerable<ProductToReturnDto>> GetAllProductsAsync(string? sort, bool? IsDescending, int? brandId, int? categoryId)
         {
             var result = mapper.Map<IEnumerable<ProductToReturnDto>>(
-                await unitOfWork.GetRepository<Product, string>().GetAllWithSpecsAsync(new ProductWithBrandAndCategorySpecifications(sort, IsAscending)));
+                await unitOfWork.GetRepository<Product, string>().GetAllWithSpecsAsync(new ProductWithBrandAndCategorySpecifications(sort, IsDescending, brandId, categoryId)));
 
 
             return result;

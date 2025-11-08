@@ -24,11 +24,6 @@ namespace LinkDev.Talabat.Application.Specifications
         {
             //Criteria = null;
         }
-        protected BaseSpecifications(TKey id)
-        {
-            Criteria = entity => entity.Id.Equals(id);
-        }
-
         protected BaseSpecifications(Expression<Func<TEntity, bool>> criteria)
         {
             Criteria = criteria;
@@ -52,7 +47,7 @@ namespace LinkDev.Talabat.Application.Specifications
         {
             if (Include != null)
                 IncludeExpression.Add(Include);
-        } 
+        }
         #endregion
     }
 }
