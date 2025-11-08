@@ -14,8 +14,8 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
     public class ProductsController(IServiceManager serviceManager) : BaseApiController
     {
         [HttpGet]  // GET: /api/Products
-        public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProductsAsync()
-            => Ok(await serviceManager.ProductService.GetProductsAsync());
+        public async Task<ActionResult<IEnumerable<ProductToReturnDto>>> GetProductsAsync(string? sort, bool IsAscending = true)
+            => Ok(await serviceManager.ProductService.GetAllProductsAsync(sort, IsAscending));
 
         [HttpGet("{id}")]  // GET: /api/Products/{id}] 
         public async Task<ActionResult<ProductToReturnDto>> GetProductByIdAsync(string id)

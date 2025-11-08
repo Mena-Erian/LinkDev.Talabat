@@ -1,4 +1,5 @@
-﻿using LinkDev.Talabat.Domain.Entities.Products;
+﻿using LinkDev.Talabat.Application.Abstraction.Models.Products;
+using LinkDev.Talabat.Domain.Entities.Products;
 using LinkDev.Talabat.Domain.Entities.Products.Products;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,73 @@ namespace LinkDev.Talabat.Application.Specifications
             AddBrandAndCategoryIncludes();
         }
 
+        public ProductWithBrandAndCategorySpecifications(string? sort, bool IsAscending = true) : this()
+        {
+            if (sort is not null)
+            {
+                AddSorting(sort, IsAscending);
+            }
+        }
+
+        #region Helper Methods
+        private protected override void AddSorting(string sort, bool IsAscending)
+        {
+            //base.AddSorting(sort, IsAscending); // I Don't Need to Call the base
+            if (IsAscending)
+            {
+                switch (sort/*.ToLower()*/) // Be Checked Later
+                {
+                    case (nameof(ProductToReturnDto.Name)):
+                        AddOrderByAsc(p => p.Name);
+                        break;
+                    case nameof(ProductToReturnDto.Price):
+                        AddOrderByAsc(p => p.Price);
+                        break;
+                    case nameof(ProductToReturnDto.Id):
+                        AddOrderByAsc(p => p.Id);
+                        break;
+                    case nameof(ProductToReturnDto.BrandId):
+                        AddOrderByAsc(p => p.BrandId ?? default);
+                        break;
+                    case nameof(ProductToReturnDto.CategoryId):
+                        AddOrderByAsc(p => p.CategoryId ?? default);
+                        break;
+
+                    default:
+                        goto case nameof(ProductToReturnDto.Name);
+                }
+            }
+            else
+            {
+                switch (sort)
+                {
+                    case (nameof(ProductToReturnDto.Name)):
+                        AddOrderByDesc(p => p.Name);
+                        break;
+                    case nameof(ProductToReturnDto.Price):
+                        AddOrderByDesc(p => p.Price);
+                        break;
+                    case nameof(ProductToReturnDto.Id):
+                        AddOrderByDesc(p => p.Id);
+                        break;
+                    case nameof(ProductToReturnDto.BrandId):
+                        AddOrderByDesc(p => p.BrandId ?? default);
+                        break;
+                    case nameof(ProductToReturnDto.CategoryId):
+                        AddOrderByDesc(p => p.CategoryId ?? default);
+                        break;
+
+                    default:
+                        goto case nameof(ProductToReturnDto.Name);
+                }
+            }
+        }
+
         private void AddBrandAndCategoryIncludes()
         {
             AddIncludes(p => p.Brand!);
             AddIncludes(p => p.Category!);
         }
+        #endregion
     }
 }

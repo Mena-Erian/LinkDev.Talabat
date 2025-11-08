@@ -16,6 +16,10 @@ namespace LinkDev.Talabat.Application.Specifications
         public Expression<Func<TEntity, bool>>? Criteria { get; private set; } = null;
         public List<Expression<Func<TEntity, object>>> IncludeExpression { get; private set; } = new();
 
+        public Expression<Func<TEntity, object>>? OrderByAsc { get; protected set; } = null;
+
+        public Expression<Func<TEntity, object>>? OrderByDesc { get; protected set; } = null;
+
         protected BaseSpecifications()
         {
             //Criteria = null;
@@ -29,11 +33,26 @@ namespace LinkDev.Talabat.Application.Specifications
         {
             Criteria = criteria;
         }
+        private protected virtual void AddOrderByAsc(Expression<Func<TEntity, object>>? orderByAsc)
+        {
+            OrderByAsc = orderByAsc;
+        }
+        private protected virtual void AddOrderByDesc(Expression<Func<TEntity, object>>? orderByDesc)
+        {
+            OrderByDesc = orderByDesc;
+        }
+
+        #region Helper Methods
+        private protected virtual void AddSorting(string sort, bool IsAscending)
+        {
+
+        }
 
         public virtual void AddIncludes(Expression<Func<TEntity, object>> Include)
         {
             if (Include != null)
                 IncludeExpression.Add(Include);
-        }
+        } 
+        #endregion
     }
 }

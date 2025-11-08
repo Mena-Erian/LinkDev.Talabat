@@ -17,5 +17,7 @@ namespace LinkDev.Talabat.Domain.Contracts
         public List<Expression<Func<TEntity, object>>> IncludeExpression { get; }
 
         public void AddIncludes(Expression<Func<TEntity, object>> Include);
+        public Expression<Func<TEntity, object>>? OrderByAsc { get; }
+        public Expression<Func<TEntity, object>>? OrderByDesc { get; }
     }
 }

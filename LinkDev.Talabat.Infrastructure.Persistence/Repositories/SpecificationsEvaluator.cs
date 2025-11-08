@@ -19,13 +19,22 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
             if (spec.Criteria is not null) // p => p.Id.Equals(1)
                 query = query.Where(spec.Criteria);
 
-            if (spec.IncludeExpression?.Count > 0)
-                query = spec.IncludeExpression.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
+
+            if (spec.OrderByAsc is not null)
+                query = query.OrderBy(spec.OrderByAsc);
+
+            else if (spec.OrderByDesc is not null)
+                query = query.OrderByDescending(spec.OrderByDesc); // P => P.Name
+
 
             /// foreach (var include in spec.IncludeExpression)
             /// {
             ///     query = query.Include(include);
             /// }
+
+            if (spec.IncludeExpression?.Count > 0)
+                query = spec.IncludeExpression.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
+
 
             return query;
         }
