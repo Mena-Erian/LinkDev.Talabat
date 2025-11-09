@@ -19,5 +19,10 @@ namespace LinkDev.Talabat.Domain.Contracts
         public void AddIncludes(Expression<Func<TEntity, object>> Include);
         public Expression<Func<TEntity, object>>? OrderByAsc { get; }
         public Expression<Func<TEntity, object>>? OrderByDesc { get; }
+
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPaginationsEnabled { get; set; }
+
     }
 }

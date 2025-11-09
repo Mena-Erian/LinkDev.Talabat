@@ -13,12 +13,15 @@ namespace LinkDev.Talabat.Application.Specifications
          where TEntity : BaseEntity<TKey>
          where TKey : IEquatable<TKey>
     {
+        
         public Expression<Func<TEntity, bool>>? Criteria { get; private set; } = null;
         public List<Expression<Func<TEntity, object>>> IncludeExpression { get; private set; } = new();
-
         public Expression<Func<TEntity, object>>? OrderByAsc { get; protected set; } = null;
-
         public Expression<Func<TEntity, object>>? OrderByDesc { get; protected set; } = null;
+
+        public int Skip { get; set; }
+        public int Take { get; set; }
+        public bool IsPaginationsEnabled { get; set; }
 
         protected BaseSpecifications()
         {
@@ -28,6 +31,14 @@ namespace LinkDev.Talabat.Application.Specifications
         {
             Criteria = criteria;
         }
+
+        #region Helper Methods
+        private protected virtual void AddPagination(int skip, int take)
+        {
+            Skip = skip;
+            Take = take;
+            IsPaginationsEnabled = true;
+        }
         private protected virtual void AddOrderByAsc(Expression<Func<TEntity, object>>? orderByAsc)
         {
             OrderByAsc = orderByAsc;
@@ -36,13 +47,10 @@ namespace LinkDev.Talabat.Application.Specifications
         {
             OrderByDesc = orderByDesc;
         }
-
-        #region Helper Methods
         private protected virtual void AddSorting(string sort, bool IsAscending)
         {
 
         }
-
         public virtual void AddIncludes(Expression<Func<TEntity, object>> Include)
         {
             if (Include != null)

@@ -27,6 +27,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
                 query = query.OrderByDescending(spec.OrderByDesc); // P => P.Name
 
 
+            if (spec.IsPaginationsEnabled)
+                query = query.Skip(spec.Skip).Take(spec.Take);
+
+
             /// foreach (var include in spec.IncludeExpression)
             /// {
             ///     query = query.Include(include);
@@ -35,7 +39,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
             if (spec.IncludeExpression?.Count > 0)
                 query = spec.IncludeExpression.Aggregate(query, (currentQuery, includeExpression) => currentQuery.Include(includeExpression));
 
-
+            
             return query;
         }
 

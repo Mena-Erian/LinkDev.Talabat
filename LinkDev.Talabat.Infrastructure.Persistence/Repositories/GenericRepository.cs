@@ -55,11 +55,22 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Repositories
 
         public async Task<IEnumerable<TEntity>> GetAllWithSpecsAsync(ISpecifications<TEntity, TKey> specifications,
             bool withTracking = false)
-            => await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbSet, specifications).ToListAsync();
+            => await ApplySpecification(specifications).ToListAsync();
 
         public async Task<TEntity?> GetWithSpecsAsync(ISpecifications<TEntity, TKey> specifications)
-           => await SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbSet, specifications).FirstOrDefaultAsync();
+           => await ApplySpecification(specifications).FirstOrDefaultAsync();
+
+        public async Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec)
+            => await ApplySpecification(spec).CountAsync();
 
         #endregion
+
+        #region Helper
+
+        public IQueryable<TEntity> ApplySpecification(ISpecifications<TEntity, TKey> spec)
+            => SpecificationsEvaluator<TEntity, TKey>.GetQuery(_dbSet, spec);
+
+        #endregion
+
     }
 }

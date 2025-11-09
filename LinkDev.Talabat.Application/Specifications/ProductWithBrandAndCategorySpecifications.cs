@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Application.Specifications
 {
-    internal class ProductWithBrandAndCategorySpecifications : BaseSpecifications<Product, string>
+    internal sealed class ProductWithBrandAndCategorySpecifications : BaseSpecifications<Product, string>
     {
         public ProductWithBrandAndCategorySpecifications() : base()
         {
@@ -22,7 +22,17 @@ namespace LinkDev.Talabat.Application.Specifications
             AddBrandAndCategoryIncludes();
         }
 
-        public ProductWithBrandAndCategorySpecifications(string? sort, bool? isDescending, int? brandId, int? categoryId) : base(
+        public ProductWithBrandAndCategorySpecifications(int? brandId, int? categoryId)
+            : base(
+                   p =>
+                    (!brandId.HasValue || p.BrandId == brandId.Value)
+                    &&
+                    (!categoryId.HasValue || p.CategoryId == categoryId.Value)
+                 )
+        {
+        }
+
+        public ProductWithBrandAndCategorySpecifications(string? sort, bool? isDescending, int? brandId, int? categoryId, int pageIndex, int pageSize) : base(
                 p =>
                 (!brandId.HasValue || p.BrandId == brandId.Value)
                 &&
@@ -35,9 +45,15 @@ namespace LinkDev.Talabat.Application.Specifications
             {
                 AddSorting(sort, isDescending ?? default);
             }
+
+            AddPagination((pageSize * (pageIndex - 1)), pageSize);
         }
 
+        public int BrandId { get; }
+        public int CategoryId { get; }
+
         #region Helper Methods
+
         private protected override void AddSorting(string sort, bool isDescending)
         {
             //base.AddSorting(sort, IsAscending); // I Don't Need to Call the base

@@ -22,7 +22,7 @@ namespace LinkDev.Talabat.Domain.Contracts.Persistence
         //Task DeleteAsync(TEntity entity);
 
         #region Specifications 
-
+        Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec);
         Task<IEnumerable<TEntity>> GetAllWithSpecsAsync(ISpecifications<TEntity, TKey> specifications, bool withTracking = false);
         Task<TEntity?> GetWithSpecsAsync(ISpecifications<TEntity, TKey> specifications);
 
