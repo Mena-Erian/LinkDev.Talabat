@@ -10,6 +10,7 @@ namespace LinkDev.Talabat.Application.Abstraction.Models.Products
     {
         private int maxPageSize = 100;
         private int pageSize;
+        private string? search;
 
         public string? Sort { get; set; }
         public bool? IsDescending { get; set; }
@@ -25,5 +26,16 @@ namespace LinkDev.Talabat.Application.Abstraction.Models.Products
                 pageSize = value > maxPageSize ? maxPageSize : value;
             }
         }
+
+
+        public string? Search
+        {
+            get => search;
+            set
+            {
+                search = value?.ToLower();
+            }
+        }
+
     }
 }

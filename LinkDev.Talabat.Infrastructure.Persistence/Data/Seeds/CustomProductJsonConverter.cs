@@ -43,6 +43,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds
                     CreatedBy = productDto.CreatedBy,
                     LastModifiedBy = productDto.LastModifiedBy,
                     Name = productDto.Name,
+                    NormalizedName = productDto.Name.ToLower(),
                     Description = productDto.Description,
                     Brand = productDto.Brand,
                     BrandId = productDto.BrandId,

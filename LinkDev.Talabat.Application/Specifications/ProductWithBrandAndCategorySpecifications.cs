@@ -22,9 +22,11 @@ namespace LinkDev.Talabat.Application.Specifications
             AddBrandAndCategoryIncludes();
         }
 
-        public ProductWithBrandAndCategorySpecifications(int? brandId, int? categoryId)
+        public ProductWithBrandAndCategorySpecifications(int? brandId, int? categoryId, string? search)
             : base(
                    p =>
+                    (string.IsNullOrEmpty(search) || p.NormalizedName.Contains(search))
+                    &&
                     (!brandId.HasValue || p.BrandId == brandId.Value)
                     &&
                     (!categoryId.HasValue || p.CategoryId == categoryId.Value)
@@ -32,8 +34,10 @@ namespace LinkDev.Talabat.Application.Specifications
         {
         }
 
-        public ProductWithBrandAndCategorySpecifications(string? sort, bool? isDescending, int? brandId, int? categoryId, int pageIndex, int pageSize) : base(
+        public ProductWithBrandAndCategorySpecifications(string? sort, bool? isDescending, int? brandId, int? categoryId, int pageIndex, int pageSize, string? search) : base(
                 p =>
+                (string.IsNullOrEmpty(search) || p.NormalizedName.Contains(search))
+                &&
                 (!brandId.HasValue || p.BrandId == brandId.Value)
                 &&
                 (!categoryId.HasValue || p.CategoryId == categoryId.Value)

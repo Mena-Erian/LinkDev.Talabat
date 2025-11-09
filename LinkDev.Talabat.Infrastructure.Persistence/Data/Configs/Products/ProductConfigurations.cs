@@ -18,6 +18,10 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data.Configs.Products
                 .IsRequired()
                 .HasMaxLength(100);
 
+            builder.Property(p => p.NormalizedName)
+           .IsRequired()
+           .HasMaxLength(100);
+
             builder.Property(p => p.Description).IsRequired();
 
             builder.Property(p => p.Price)
