@@ -1,4 +1,6 @@
-﻿using LinkDev.Talabat.Domain.Contracts;
+﻿using LinkDev.Talabat.Domain.Contracts.Persistence;
+using LinkDev.Talabat.Domain.Entities.Departments;
+using LinkDev.Talabat.Domain.Entities.Employees;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
-    internal class StoreContextInitializer( StoreContext dbContext) : IStoreContextInitializer
+    internal class StoreContextInitializer(StoreContext dbContext) : IStoreContextInitializer
     {
 
         public async Task InitializeOrUpdateAsync()
@@ -62,8 +64,30 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
                 }
 
             }
+
+            if (!dbContext.Departments.Any())
+            {
+                var departmentData = await File.ReadAllTextAsync($"../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/Employees/departments.json");
+                var departments = JsonSerializer.Deserialize<List<Department>>(departmentData);
+
+                if (departments?.Count() > 0)
+                {
+                    await dbContext.Departments.AddRangeAsync(departments);
+                    await dbContext.SaveChangesAsync();
+                }
+            }
+
+            if (!dbContext.Employees.Any())
+            {
+                var employeeData = await File.ReadAllTextAsync($"../LinkDev.Talabat.Infrastructure.Persistence/Data/Seeds/Employees/employees.json");
+                var employees = JsonSerializer.Deserialize<List<Employee>>(employeeData);
+
+                if (employees?.Count() > 0)
+                {
+                    await dbContext.Employees.AddRangeAsync(employees);
+                    await dbContext.SaveChangesAsync();
+                }
+            }
         }
-
-
     }
 }

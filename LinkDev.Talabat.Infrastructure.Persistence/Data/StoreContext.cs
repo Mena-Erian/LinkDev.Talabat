@@ -1,4 +1,6 @@
-﻿using LinkDev.Talabat.Domain.Entities.Products;
+﻿using LinkDev.Talabat.Domain.Entities.Departments;
+using LinkDev.Talabat.Domain.Entities.Employees;
+using LinkDev.Talabat.Domain.Entities.Products;
 using LinkDev.Talabat.Domain.Entities.Products.Products;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -7,7 +9,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
     public class StoreContext : DbContext
     {
- 
+
         public StoreContext(DbContextOptions<StoreContext> options) : base(options)
         {
 
@@ -20,8 +22,13 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AssemblyInformation).Assembly);
         }
 
+
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductBrand> Brands { get; set; }
         public DbSet<ProductCategory> Categories { get; set; }
+
+
+        public DbSet<Employee> Employees { get; set; }
+        public DbSet<Department> Departments { get; set; }
     }
 }

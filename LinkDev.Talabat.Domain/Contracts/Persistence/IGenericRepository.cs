@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LinkDev.Talabat.Domain.Contracts
+namespace LinkDev.Talabat.Domain.Contracts.Persistence
 {
     public interface IGenericRepository<TEntity, TKey>
         where TEntity : BaseEntity<TKey>
@@ -15,12 +15,18 @@ namespace LinkDev.Talabat.Domain.Contracts
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
         void Delete(TEntity entity);
-
         Task<int> DeleteAllAsync();
 
-        //Task UpdateAsync(TEntity entity);
 
+        //Task UpdateAsync(TEntity entity);
         //Task DeleteAsync(TEntity entity);
+
+        #region Specifications 
+        Task<int> GetCountAsync(ISpecifications<TEntity, TKey> spec);
+        Task<IEnumerable<TEntity>> GetAllWithSpecsAsync(ISpecifications<TEntity, TKey> specifications, bool withTracking = false);
+        Task<TEntity?> GetWithSpecsAsync(ISpecifications<TEntity, TKey> specifications);
+
+        #endregion
 
     }
 }
