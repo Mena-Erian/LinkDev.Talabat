@@ -1,5 +1,6 @@
 
 using LinkDev.Talabat.APIs.Controllers;
+using LinkDev.Talabat.APIs.Controllers.Errors;
 using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.Application;
 using LinkDev.Talabat.Domain.Contracts;
@@ -25,7 +26,28 @@ namespace LinkDev.Talabat.APIs
 
             webApplicationBuilder.Services
                 .AddControllers() // Register Required Services by ASP.NET Core Web APIs to DI Container
-                .AddApplicationPart(typeof(AssemblyControllersInformation).Assembly); // To make sure that Controllers from other assemblies are registered, but it already see it by default.
+                .AddApplicationPart(typeof(AssemblyControllersInformation).Assembly) // To make sure that Controllers from other assemblies are registered, but it already see it by default.
+                .ConfigureApiBehaviorOptions((setupAction) =>
+                {
+                    setupAction.SuppressModelStateInvalidFilter = false;
+                    // Will not execute any endpoint that has invalid model state
+                    setupAction.InvalidModelStateResponseFactory = (actionContext) =>
+                    {
+                        var errors = actionContext.ModelState.Where(p => p.Value.Errors.Count > 0)
+                                       .Select(p => new ApiValidationErrorResponse.ValidationError()
+                                       {
+                                           Field = p.Key,
+                                           Errors = p.Value.Errors.Select(p => p.ErrorMessage)
+                                       });
+
+                        return new BadRequestObjectResult(new ApiValidationErrorResponse()
+                        {
+                            Errors = errors
+                        });
+                    };
+
+                });
+
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer();
@@ -48,8 +70,6 @@ namespace LinkDev.Talabat.APIs
             #region Configure Kestrel Middlewates
             // Configure the HTTP request pipeline.
 
-            //app.UseAuthorization();
-
             // Routing Middleware should be placed before any middleware that depends on routing decisions
             app.UseRouting();
 
@@ -64,8 +84,11 @@ namespace LinkDev.Talabat.APIs
                 app.UseSwaggerUI();
             }
 
+            app.UseAuthentication();
+            app.UseAuthorization();
+
             app.MapControllers();
-           
+
             #endregion
 
             app.Run();
