@@ -78,6 +78,7 @@ namespace LinkDev.Talabat.APIs
 
             app.UseMiddleware<ExceptionHandlerMiddleware>();
 
+
             #region Middleware
             /// app.Use(async (context, next) =>
             /// {
@@ -130,6 +131,8 @@ namespace LinkDev.Talabat.APIs
 
             app.UseHttpsRedirection();
 
+            app.UseStatusCodePagesWithReExecute("/Errors/{0}");
+            //app.UseStatusCodePagesWithRedirects("/Errors/{0}");
 
             if (app.Environment.IsDevelopment())
             {
