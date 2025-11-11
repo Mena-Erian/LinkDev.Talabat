@@ -1,6 +1,7 @@
 
 using LinkDev.Talabat.APIs.Controllers;
 using LinkDev.Talabat.APIs.Controllers.Errors;
+using LinkDev.Talabat.APIs.Controllers.Middlewares;
 using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.Application;
 using LinkDev.Talabat.Domain.Contracts;
@@ -10,6 +11,9 @@ using LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.APIs
@@ -71,6 +75,55 @@ namespace LinkDev.Talabat.APIs
             // Configure the HTTP request pipeline.
 
             // Routing Middleware should be placed before any middleware that depends on routing decisions
+
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
+            #region Middleware
+            /// app.Use(async (context, next) =>
+            /// {
+            ///     using var scope = app.Services.CreateAsyncScope();
+            ///     var services = scope.ServiceProvider;
+            /// 
+            ///     var environment = services.GetRequiredService<IWebHostEnvironment>();
+            /// 
+            ///     var logger = services.GetRequiredService<ILogger>();
+            /// 
+            ///     try
+            ///     {
+            ///         // Logic Will be executed for the request
+            /// 
+            ///         await next(context); // Go to next Middleware of the application itself
+            /// 
+            ///         // Logic will be executed for the response
+            /// 
+            ///     }
+            ///     catch (Exception ex)
+            ///     {
+            ///         #region Logging: ToDo with Serial Package
+            /// 
+            ///         if (environment.IsDevelopment())
+            ///         {
+            ///             logger.LogError(ex, ex.Message, ex.StackTrace!.ToString());
+            ///         }
+            ///         else
+            ///         {
+            ///             // Log Exception in External Resource like Database or File(Text, Json)
+            ///         }
+            /// 
+            ///         #endregion
+            /// 
+            ///         context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+            ///         context.Response.ContentType = "application/json";
+            /// 
+            ///         var response = environment.IsDevelopment() ? new ApiExceptionResponse((int)///H ttpStatusCode.InternalServerError, ex.Message, ex.StackTrace?.ToString()) : new ApiExceptionResponse/((int)//H ttpStatusCode.InternalServerError, ex.Message);
+            /// 
+            ///         await context.Response.WriteAsync(response.ToString());
+            /// 
+            ///     }
+            /// 
+            /// }); 
+            #endregion
+
             app.UseRouting();
 
             app.UseStaticFiles();
@@ -82,6 +135,8 @@ namespace LinkDev.Talabat.APIs
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
+
+                //app.UseDeveloperExceptionPage();
             }
 
             app.UseAuthentication();
