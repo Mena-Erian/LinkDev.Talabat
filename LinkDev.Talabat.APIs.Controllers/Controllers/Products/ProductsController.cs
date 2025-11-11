@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.APIs.Controllers.Controllers.Base;
+using LinkDev.Talabat.APIs.Controllers.Errors;
 using LinkDev.Talabat.Application.Abstraction.Common;
 using LinkDev.Talabat.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Application.Abstraction.Services;
@@ -20,8 +21,10 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 
         [HttpGet("{id}")]  // GET: /api/Products/{id}] 
         public async Task<ActionResult<ProductToReturnDto>> GetProductByIdAsync(string id)
-            //=> Ok(await serviceManager.ProductService.GetProductAsync(id));
-            => Ok(await serviceManager.ProductService.GetProductAsync(id));
+        {
+            var product = await serviceManager.ProductService.GetProductAsync(id);
+            return Ok(product);
+        }
 
 
         [HttpGet("brands")] // GET: /api/Products/brands

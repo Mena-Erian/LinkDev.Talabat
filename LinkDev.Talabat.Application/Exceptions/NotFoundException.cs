@@ -1,0 +1,13 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LinkDev.Talabat.Application.Exceptions
+{
+    public class NotFoundException(string name, object key) : ApplicationException($"The {name} with id:{key} is not found")
+    {
+
+    }
+}
