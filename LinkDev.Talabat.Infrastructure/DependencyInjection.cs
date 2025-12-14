@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using LinkDev.Talabat.Domain.Contracts.Infrastructure;
+using LinkDev.Talabat.Infrastructure.RedisRepository;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using StackExchange.Redis;
 using System;
@@ -25,13 +27,11 @@ namespace LinkDev.Talabat.Infrastructure
                     Password = configuration["ConnectionStrings:Redis:Password"]
                 };
 
-
-
                 return ConnectionMultiplexer.Connect(config);
 
             });
 
-
+            services.AddScoped<IBasketRepository, BasketRepository>();
 
             return services;
         }
