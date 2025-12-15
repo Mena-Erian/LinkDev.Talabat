@@ -16,6 +16,10 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using LinkDev.Talabat.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using LinkDev.Talabat.Domain.Contracts.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence.Identity;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -60,6 +64,8 @@ namespace LinkDev.Talabat.APIs
             webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddApplicationServices();
+           
+            webApplicationBuilder.Services.AddIdentityServices();
 
             #endregion
 
@@ -67,7 +73,7 @@ namespace LinkDev.Talabat.APIs
 
             #region Database Initialization & Seeding
 
-            await app.InitializeStoreContextAsync();
+            await app.InitializeDbAsync();
 
             #endregion
 
