@@ -34,7 +34,10 @@ namespace LinkDev.Talabat.Application.Mapping.Profiles
                 .ForMember(d => d.EmployeesNames, opt => opt.MapFrom(src => src.Employees != null ? src.Employees.Select(e => e.Name).ToList() : new List<string>()))
                 .ReverseMap();
 
-            CreateMap<Basket, BasketDto>().ReverseMap();
+            CreateMap<Basket, BasketDto>()
+                //.ForMember(b => b.Items)
+                .ReverseMap();
+            CreateMap<BasketItem, BasketItemDto>().ReverseMap();
 
         }
     }

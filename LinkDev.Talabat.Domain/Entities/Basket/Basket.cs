@@ -8,6 +8,6 @@ namespace LinkDev.Talabat.Domain.Entities.Basket
 {
     public class Basket : BaseEntity<string>
     {
-        public required IEnumerable<BasketItem> Items { get; set; }
+        public required IEnumerable<BasketItem> Items { get; set; } = Enumerable.Empty<BasketItem>();
     }
 }

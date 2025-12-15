@@ -19,16 +19,21 @@ namespace LinkDev.Talabat.Infrastructure
             services.AddScoped<IConnectionMultiplexer>(sp =>
             {
 
-                var config = new ConfigurationOptions
+                var muxer = new ConfigurationOptions
                 {
-                    EndPoints = { { configuration["ConnectionStrings:Redis:Endpoint"]! } },
+                    EndPoints = { { configuration.GetConnectionString("Redis:Endpoint") ?? "", int.Parse(configuration.GetConnectionString("Redis:Port") ?? "0") } },
                     // If your Redis requires authentication, set the User and Password properties
-                    User = configuration["ConnectionStrings:Redis:User"],
-                    Password = configuration["ConnectionStrings:Redis:Password"]
+                    User = configuration.GetConnectionString("Redis:User"),
+                    Password = configuration.GetConnectionString("Redis:Password"),
+                     
                 };
 
-                return ConnectionMultiplexer.Connect(config);
+                var cm = ConnectionMultiplexer.Connect(muxer);
 
+                var db = cm.GetDatabase();
+                Console.WriteLine(db);
+
+                return cm;
             });
 
             services.AddScoped<IBasketRepository, BasketRepository>();
@@ -59,3 +64,30 @@ namespace LinkDev.Talabat.Infrastructure
 
 //    }
 //}
+
+
+/*
+ using StackExchange.Redis;
+
+public class ConnectBasicExample
+{
+
+    public void run()
+    {
+        var muxer = ConnectionMultiplexer.Connect(
+            new ConfigurationOptions{
+                EndPoints= { {"redis-19461.crce176.me-central-1-1.ec2.cloud.redislabs.com", 19461} },
+                User="default",
+                Password="5Wj2eIPsTxZSHhxhFvH4WBEH37vpyo0N"
+            }
+        );
+        var db = muxer.GetDatabase();
+        
+        db.StringSet("foo", "bar");
+        RedisValue result = db.StringGet("foo");
+        Console.WriteLine(result); // >>> bar
+        
+    }
+}
+
+ */

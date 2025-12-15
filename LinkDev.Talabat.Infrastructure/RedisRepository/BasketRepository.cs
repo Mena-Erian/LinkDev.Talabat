@@ -23,6 +23,7 @@ namespace LinkDev.Talabat.Infrastructure.RedisRepository
         public async Task<Basket?> CreateOrUpdateAsync(Basket basket, TimeSpan expiration)
         {
             var serializedBasket = JsonSerializer.Serialize(basket);
+
             var isCreatedOrUpdated = await _database.StringSetAsync(basket.Id, serializedBasket, expiration);
 
             if (!isCreatedOrUpdated) return null;
