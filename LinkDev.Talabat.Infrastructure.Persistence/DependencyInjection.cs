@@ -1,4 +1,5 @@
 ﻿using LinkDev.Talabat.Domain.Contracts.Persistence;
+using LinkDev.Talabat.Domain.Contracts.Persistence.DbInitializers;
 using LinkDev.Talabat.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
@@ -35,9 +36,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
                 .UseSqlServer(configuration.GetConnectionString("IdentityContext"));
             }/*, ServiceLifetime.Scoped,ServiceLifetime.Scoped*/);
 
-
-
-
+            services.AddScoped<IStoreIdentityDbInitializer, StoreIdentityDbInitializer>();
 
             #endregion
 
