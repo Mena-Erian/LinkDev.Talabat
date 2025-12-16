@@ -8,7 +8,7 @@ namespace LinkDev.Talabat.APIs.Extensions
 {
     public static class IdentityExtensions
     {
-        public static IServiceCollection AddIdentityServices(this IServiceCollection services)
+        public static IServiceCollection AddIdentityServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
@@ -50,6 +50,8 @@ namespace LinkDev.Talabat.APIs.Extensions
             }).AddEntityFrameworkStores<StoreIdentityDbContext>();
 
             services.AddScoped<IAuthService, AuthService>();
+
+            services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
 
 
             services.AddScoped(typeof(Func<IAuthService>), (serviceProvider) =>
