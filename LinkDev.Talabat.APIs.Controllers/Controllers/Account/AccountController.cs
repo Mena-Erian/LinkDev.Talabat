@@ -22,10 +22,15 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Account
             => Ok(await serviceManager.AuthService.RegisterAsync(model));
 
         [Authorize]
-        [HttpGet()] // GET: /api/account
+        [HttpGet] // GET: /api/account
         public async Task<ActionResult<UserDto>> GetCurrentUser()
             => Ok(await serviceManager.AuthService.GetCurrentLoginUser(User));
 
-    }
 
+        [Authorize]
+        [HttpGet("address")] // GET: /api/account/address
+        public async Task<ActionResult<AddressDto>> GetUserAddress()
+            => Ok(await serviceManager.AuthService.GetUserAddress(User));
+
+    }
 }
