@@ -11,6 +11,7 @@ namespace LinkDev.Talabat.Application.Abstraction.Services.Auth
     public interface IAuthService
     {
         Task<UserDto> LoginAsync(LoginDto model);
+
         Task<UserDto> RegisterAsync(RegisterDto model);
 
         Task<UserDto> GetCurrentLoginUser(ClaimsPrincipal claimsPrincipal);
@@ -18,5 +19,7 @@ namespace LinkDev.Talabat.Application.Abstraction.Services.Auth
         Task<AddressDto?> GetUserAddress(ClaimsPrincipal claimsPrincipal);
 
         Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto);
+
+        Task<bool> IsEmailExists(string email);
     }
 }

@@ -37,5 +37,8 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Account
         public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto addressDto)
             => Ok(await serviceManager.AuthService.UpdateUserAddress(User, addressDto));
 
+        [HttpGet("emailexists")] // GET: /api/account/emailexists?email=
+        public async Task<ActionResult<object>> IsEmailExists(string email)
+            => Ok(new { Email = email, IsExists = await serviceManager.AuthService.IsEmailExists(email) });
     }
 }

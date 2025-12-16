@@ -65,12 +65,18 @@ namespace LinkDev.Talabat.Application.Services.Auth
 
         public async Task<UserDto> RegisterAsync(RegisterDto model)
         {
+            //if(IsEmailExists(model.Email).Result)
+            //{
+            //    throw new ValidationException { Errors = new[] { "Email already exists." } };
+            //}
+
             var user = new ApplicationUser()
             {
                 DisplayName = model.DisplayName,
                 Email = model.Email,
                 UserName = model.Email,
             };
+            
             var result = await userManager.CreateAsync(user, model.Password);
 
 
@@ -120,6 +126,9 @@ namespace LinkDev.Talabat.Application.Services.Auth
             return addressDto;
         }
 
+        public async Task<bool> IsEmailExists(string email) 
+            => await userManager.FindByEmailAsync(email) is not null;
+
         private async Task<string> GenerateTokenAsync(ApplicationUser user)
         {
             var userClaims = await userManager.GetClaimsAsync(user);
@@ -152,5 +161,7 @@ namespace LinkDev.Talabat.Application.Services.Auth
 
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
+
+
     }
 }
