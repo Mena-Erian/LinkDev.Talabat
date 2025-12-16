@@ -26,6 +26,10 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Account
         public async Task<ActionResult<UserDto>> GetCurrentUser()
             => Ok(await serviceManager.AuthService.GetCurrentLoginUser(User));
 
+        [Authorize]
+        [HttpGet("reference-looping-error")] // GET: /api/account/reference-looping-error
+        public async Task<ActionResult<object>> GetCurrentUserReferenceLoopingError() // whey return user object while i return in the service an address object? // TODO: see why
+            => Ok(await serviceManager.AuthService.GetUserAddressReferenceLoopingIssue(User));
 
         [Authorize]
         [HttpGet("address")] // GET: /api/account/address

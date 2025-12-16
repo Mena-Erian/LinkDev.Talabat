@@ -76,13 +76,13 @@ namespace LinkDev.Talabat.Application.Services.Auth
                 Email = model.Email,
                 UserName = model.Email,
             };
-            
+
             var result = await userManager.CreateAsync(user, model.Password);
 
 
             if (!result.Succeeded)
             {
-                var errors = result.Errors.Select(e => e.Description);
+                var errors = result.Errors.Select(e => e.Description).ToArray();
                 throw new ValidationException { Errors = errors };
             }
 
@@ -106,6 +106,15 @@ namespace LinkDev.Talabat.Application.Services.Auth
             return mapper.Map<AddressDto>(user!.Address);
         }
 
+        public async Task<object> GetUserAddressReferenceLoopingIssue(ClaimsPrincipal claimsPrincipal)
+        {
+            var user = await userManager.FindUserByEmailWithAddressAsync(claimsPrincipal);
+
+            var address = user!.Address;
+
+            return address;
+        }
+
         public async Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto)
         {
             var user = await userManager.FindUserByEmailWithAddressAsync(claimsPrincipal);
@@ -126,7 +135,7 @@ namespace LinkDev.Talabat.Application.Services.Auth
             return addressDto;
         }
 
-        public async Task<bool> IsEmailExists(string email) 
+        public async Task<bool> IsEmailExists(string email)
             => await userManager.FindByEmailAsync(email) is not null;
 
         private async Task<string> GenerateTokenAsync(ApplicationUser user)
@@ -161,7 +170,6 @@ namespace LinkDev.Talabat.Application.Services.Auth
 
             return new JwtSecurityTokenHandler().WriteToken(tokenOptions);
         }
-
 
     }
 }

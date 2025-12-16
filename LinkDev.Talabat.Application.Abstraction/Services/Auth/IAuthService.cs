@@ -20,6 +20,9 @@ namespace LinkDev.Talabat.Application.Abstraction.Services.Auth
 
         Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto);
 
+        Task<object> GetUserAddressReferenceLoopingIssue(ClaimsPrincipal claimsPrincipal);
+
+
         Task<bool> IsEmailExists(string email);
     }
 }

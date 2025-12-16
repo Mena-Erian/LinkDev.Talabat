@@ -55,6 +55,17 @@ namespace LinkDev.Talabat.APIs
                         });
                     };
 
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    // Why??
+                    /// if i have navigation properties that reference each other
+                    /// like Category -> Products -> Category -> Products ...
+                    /// it will cause circular reference exception
+                    /// so we need to ignore it to avoid this exception
+                    /// that when i come product in category it will ignore category property and also exchange
+
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
 
