@@ -1,4 +1,6 @@
-﻿using LinkDev.Talabat.Domain.Entities.Identity;
+﻿using LinkDev.Talabat.Application.Abstraction.Services.Auth;
+using LinkDev.Talabat.Application.Services.Auth;
+using LinkDev.Talabat.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
 using Microsoft.AspNetCore.Identity;
 
@@ -45,6 +47,14 @@ namespace LinkDev.Talabat.APIs.Extensions
                 #endregion
 
             }).AddEntityFrameworkStores<StoreIdentityDbContext>();
+
+            services.AddScoped<IAuthService, AuthService>();
+
+
+            services.AddScoped(typeof(Func<IAuthService>), (serviceProvider) =>
+            {
+                return () => serviceProvider.GetRequiredService<IAuthService>(); // I think here we still need to userManager or no , i don't know
+            });
 
             return services;
         }

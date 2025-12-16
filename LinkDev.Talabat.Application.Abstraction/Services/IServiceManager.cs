@@ -1,4 +1,5 @@
-﻿using LinkDev.Talabat.Application.Abstraction.Services.Baskets;
+﻿using LinkDev.Talabat.Application.Abstraction.Services.Auth;
+using LinkDev.Talabat.Application.Abstraction.Services.Baskets;
 using LinkDev.Talabat.Application.Abstraction.Services.Departments;
 using LinkDev.Talabat.Application.Abstraction.Services.Employees;
 using LinkDev.Talabat.Application.Abstraction.Services.Products;
@@ -12,6 +13,7 @@ namespace LinkDev.Talabat.Application.Abstraction.Services
 {
     public interface IServiceManager
     {
+        public IAuthService AuthService { get; }
         public IBasketService BasketService { get; }
         public IProductService ProductService { get; }
         public IEmployeeService EmployeeService { get; }
