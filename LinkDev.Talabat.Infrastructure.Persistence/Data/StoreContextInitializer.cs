@@ -1,6 +1,7 @@
-﻿using LinkDev.Talabat.Domain.Contracts.Persistence;
+﻿using LinkDev.Talabat.Domain.Contracts.Persistence.DbInitializers;
 using LinkDev.Talabat.Domain.Entities.Departments;
 using LinkDev.Talabat.Domain.Entities.Employees;
+using LinkDev.Talabat.Infrastructure.Persistence.Common;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -12,17 +13,10 @@ using System.Threading.Tasks;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence.Data
 {
-    internal class StoreContextInitializer(StoreContext dbContext) : IStoreContextInitializer
+    internal class StoreContextInitializer(StoreContext dbContext) : BaseDbInitializer(dbContext), IStoreContextInitializer
     {
 
-        public async Task InitializeOrUpdateAsync()
-        {
-            if (dbContext.Database.GetPendingMigrations().Any())
-                await dbContext.Database.MigrateAsync(); //Update-Database
-
-        }
-
-        public async Task SeedDataAsync()
+        public override async Task SeedDataAsync()
         {
 
             if (!dbContext.Brands.Any())
@@ -89,5 +83,7 @@ namespace LinkDev.Talabat.Infrastructure.Persistence.Data
                 }
             }
         }
+
+
     }
 }

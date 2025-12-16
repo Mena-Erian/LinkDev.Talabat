@@ -1,5 +1,9 @@
 ﻿using LinkDev.Talabat.Domain.Contracts.Persistence;
+using LinkDev.Talabat.Domain.Contracts.Persistence.DbInitializers;
+using LinkDev.Talabat.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
+using LinkDev.Talabat.Infrastructure.Persistence.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 
 namespace LinkDev.Talabat.Infrastructure.Persistence
@@ -8,18 +12,36 @@ namespace LinkDev.Talabat.Infrastructure.Persistence
     {
         public static IServiceCollection AddPersistenceServices(this IServiceCollection services, IConfiguration configuration)
         {
+            #region Store Context
             services.AddDbContext<StoreContext>(options =>
-            {
-                options
-                .UseLazyLoadingProxies()
-                .UseSqlServer(configuration.GetConnectionString("StoreContext"));
-            }/*, ServiceLifetime.Scoped,ServiceLifetime.Scoped*/);
+              {
+                  options
+                  .UseLazyLoadingProxies()
+                  .UseSqlServer(configuration.GetConnectionString("StoreContext"));
+              }/*, ServiceLifetime.Scoped,ServiceLifetime.Scoped*/);
+
 
             services.AddScoped<IStoreContextInitializer, StoreContextInitializer>();
             //services.AddScoped(typeof(IStoreContextInitializer), typeof(StoreContextInitializer));
 
+            #endregion
+
+            #region Identity Context
+
+            services.AddDbContext<StoreIdentityDbContext>(options =>
+            {
+                options
+                .UseLazyLoadingProxies()
+                .UseSqlServer(configuration.GetConnectionString("IdentityContext"));
+            }/*, ServiceLifetime.Scoped,ServiceLifetime.Scoped*/);
+
+            services.AddScoped<IStoreIdentityDbInitializer, StoreIdentityDbInitializer>();
+
+            #endregion
+
             services.AddScoped<IUnitOfWork, UnitOfWork.UnitOfWork>();
 
+           
             return services;
         }
     }

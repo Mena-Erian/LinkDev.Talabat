@@ -40,7 +40,6 @@ namespace LinkDev.Talabat.Application.Services.Products
             if (product is null)
                 throw new NotFoundException(nameof(Product), id);
 
-
             return mapper.Map<ProductToReturnDto>(product);
         }
         //public async Task<ProductToReturnDto?> GetProductWithSpecAsync(string id)
@@ -48,8 +47,10 @@ namespace LinkDev.Talabat.Application.Services.Products
 
         public async Task<IEnumerable<BrandDto>> GetBrandsAsync()
             => mapper.Map<IEnumerable<BrandDto>>(await unitOfWork.GetRepository<ProductBrand, int>().GetAllAsync());
+
         public async Task<IEnumerable<CategoryDto>> GetCategoriesAsync()
             => mapper.Map<IEnumerable<CategoryDto>>(await unitOfWork.GetRepository<ProductCategory, int>().GetAllAsync());
+
 
         public async Task<int> DeleteAllProductAsync()
             => await unitOfWork.GetRepository<Product, string>().DeleteAllAsync();

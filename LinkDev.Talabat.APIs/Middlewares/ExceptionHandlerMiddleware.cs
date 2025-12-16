@@ -22,20 +22,20 @@ namespace LinkDev.Talabat.APIs.Controllers.Middlewares
 
                 await next(httpContext); // Go to next Middleware of the application itself
 
-                // Logic will be executed for the response
+                // Logic will be executed for the validationresponse
 
-               /// if (httpContext.Response.StatusCode == (int)HttpStatusCode.NotFound)
-               /// {
-               ///     var response = new ApiErrorResponse((int)HttpStatusCode.NotFound, $"The requested endpoint: ///{httpContext.Request.Path} is not Found");
-               ///
-               ///
-               ///     var json = JsonSerializer.Serialize(response, new JsonSerializerOptions()
-               ///     {
-               ///         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-               ///     });
-               ///
-               ///     await httpContext.Response.WriteAsync(json.ToString());
-               /// }
+                /// if (httpContext.Response.StatusCode == (int)HttpStatusCode.NotFound)
+                /// {
+                ///     var response = new ApiErrorResponse((int)HttpStatusCode.NotFound, $"The requested endpoint: ///{httpContext.Request.Path} is not Found");
+                ///
+                ///
+                ///     var json = JsonSerializer.Serialize(response, new JsonSerializerOptions()
+                ///     {
+                ///         PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+                ///     });
+                ///
+                ///     await httpContext.Response.WriteAsync(json.ToString());
+                /// }
 
             }
             catch (Exception ex)
@@ -61,14 +61,33 @@ namespace LinkDev.Talabat.APIs.Controllers.Middlewares
         private static async Task HandleExceptionAsync(HttpContext context, IWebHostEnvironment environment, Exception ex)
         {
             int statusCode;
+
             switch (ex)
             {
                 case NotFoundException:
                     statusCode = (int)HttpStatusCode.NotFound;
                     break;
 
+                case ValidationException validationException:
+                    statusCode = (int)HttpStatusCode.BadRequest;
+                    context.Response.StatusCode = statusCode;
+                    context.Response.ContentType = "application/json";
+
+                    var validationresponse = environment.IsDevelopment() ? new ApiExceptionResponse(statusCode, validationException.Message, validationException.StackTrace?.ToString()) : new ApiExceptionResponse(statusCode, validationException.Message)
+                    {
+                        Errors = validationException.Errors
+                    };
+
+
+                    await context.Response.WriteAsync(validationresponse.ToString());
+                    return;
+
                 case BadRequestException:
                     statusCode = (int)HttpStatusCode.BadRequest;
+                    break;
+
+                case UnAuthorizedException:
+                    statusCode = (int)HttpStatusCode.Unauthorized;
                     break;
 
                 default:

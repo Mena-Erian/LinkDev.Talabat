@@ -6,6 +6,7 @@ using LinkDev.Talabat.APIs.Extensions;
 using LinkDev.Talabat.Application;
 using LinkDev.Talabat.Domain.Contracts;
 using LinkDev.Talabat.Infrastructure.Persistence;
+using LinkDev.Talabat.Infrastructure;
 using LinkDev.Talabat.Infrastructure.Persistence.Data;
 using LinkDev.Talabat.Infrastructure.Persistence.Data.Seeds;
 using Microsoft.AspNetCore.Mvc;
@@ -15,6 +16,10 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net;
 using System.Threading.Tasks;
+using LinkDev.Talabat.Domain.Entities.Identity;
+using Microsoft.AspNetCore.Identity;
+using LinkDev.Talabat.Domain.Contracts.Persistence;
+using LinkDev.Talabat.Infrastructure.Persistence.Identity;
 
 namespace LinkDev.Talabat.APIs
 {
@@ -50,15 +55,27 @@ namespace LinkDev.Talabat.APIs
                         });
                     };
 
+                })
+                .AddNewtonsoftJson(options =>
+                {
+                    // Why??
+                    /// if i have navigation properties that reference each other
+                    /// like Category -> Products -> Category -> Products ...
+                    /// it will cause circular reference exception
+                    /// so we need to ignore it to avoid this exception
+                    /// that when i come product in category it will ignore category property and also exchange
+
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
                 });
 
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             webApplicationBuilder.Services.AddEndpointsApiExplorer();
             webApplicationBuilder.Services.AddSwaggerGen();
-
+            webApplicationBuilder.Services.AddInfrastructureServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddPersistenceServices(webApplicationBuilder.Configuration);
             webApplicationBuilder.Services.AddApplicationServices();
+            webApplicationBuilder.Services.AddIdentityServices(webApplicationBuilder.Configuration);
 
             #endregion
 
@@ -66,7 +83,7 @@ namespace LinkDev.Talabat.APIs
 
             #region Database Initialization & Seeding
 
-            await app.InitializeStoreContextAsync();
+            await app.InitializeDbAsync();
 
             #endregion
 

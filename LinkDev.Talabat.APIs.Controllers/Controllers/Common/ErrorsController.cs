@@ -27,7 +27,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Common
                 return NotFound(response);
             }
 
-            return StatusCode(code);
+            return StatusCode(code, new ApiErrorResponse(code, $"An error occurred with status code: {code}"));
         }
     }
 }
