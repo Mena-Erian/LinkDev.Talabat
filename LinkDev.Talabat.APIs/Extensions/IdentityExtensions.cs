@@ -13,6 +13,7 @@ namespace LinkDev.Talabat.APIs.Extensions
             services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.User.RequireUniqueEmail = true;
+
                 //opt.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
 
                 opt.SignIn.RequireConfirmedPhoneNumber = true;

@@ -78,6 +78,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Middlewares
                         Errors = validationException.Errors
                     };
 
+
                     await context.Response.WriteAsync(validationresponse.ToString());
                     return;
 
