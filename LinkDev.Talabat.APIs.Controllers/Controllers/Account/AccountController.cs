@@ -32,5 +32,10 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Account
         public async Task<ActionResult<AddressDto>> GetUserAddress()
             => Ok(await serviceManager.AuthService.GetUserAddress(User));
 
+        [Authorize]
+        [HttpPut("address")] // PUT: /api/account/address
+        public async Task<ActionResult<AddressDto>> UpdateUserAddress(AddressDto addressDto)
+            => Ok(await serviceManager.AuthService.UpdateUserAddress(User, addressDto));
+
     }
 }

@@ -15,7 +15,8 @@ namespace LinkDev.Talabat.Application.Abstraction.Services.Auth
 
         Task<UserDto> GetCurrentLoginUser(ClaimsPrincipal claimsPrincipal);
 
-        Task<AddressDto> GetUserAddress(ClaimsPrincipal claimsPrincipal);
+        Task<AddressDto?> GetUserAddress(ClaimsPrincipal claimsPrincipal);
 
+        Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto);
     }
 }

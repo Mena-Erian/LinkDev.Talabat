@@ -91,7 +91,7 @@ namespace LinkDev.Talabat.Application.Services.Auth
             return response;
         }
 
-        public async Task<AddressDto> GetUserAddress(ClaimsPrincipal claimsPrincipal)
+        public async Task<AddressDto?> GetUserAddress(ClaimsPrincipal claimsPrincipal)
         {
             //var email = claimsPrincipal.FindFirstValue(ClaimTypes.Email);
 
@@ -100,6 +100,25 @@ namespace LinkDev.Talabat.Application.Services.Auth
             return mapper.Map<AddressDto>(user!.Address);
         }
 
+        public async Task<AddressDto> UpdateUserAddress(ClaimsPrincipal claimsPrincipal, AddressDto addressDto)
+        {
+            var user = await userManager.FindUserByEmailWithAddressAsync(claimsPrincipal);
+
+            var address = mapper.Map<Address>(addressDto);
+
+            if (user?.Address is not null)
+            {
+                address.Id = user.Address.Id; // to update not insert new
+            }
+
+            user!.Address = address;
+
+            var result = await userManager.UpdateAsync(user);
+
+            if (!result.Succeeded) throw new BadRequestException(result.Errors.Select(err => err.Description).Aggregate((x, y) => $"{x}, {y}"));
+
+            return addressDto;
+        }
 
         private async Task<string> GenerateTokenAsync(ApplicationUser user)
         {
