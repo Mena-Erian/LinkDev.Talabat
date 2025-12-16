@@ -2,6 +2,7 @@
 using LinkDev.Talabat.Application.Services.Auth;
 using LinkDev.Talabat.Domain.Entities.Identity;
 using LinkDev.Talabat.Infrastructure.Persistence.Identity;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 
 namespace LinkDev.Talabat.APIs.Extensions
@@ -57,6 +58,30 @@ namespace LinkDev.Talabat.APIs.Extensions
             services.AddScoped(typeof(Func<IAuthService>), (serviceProvider) =>
             {
                 return () => serviceProvider.GetRequiredService<IAuthService>(); // I think here we still need to userManager or no , i don't know
+            });
+
+
+            //services.AddAuthentication();
+            //services.AddAuthentication("Hamada");
+            services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+            }).AddJwtBearer(JwtBearerDefaults.AuthenticationScheme, opt =>
+            {
+                opt.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = configuration["JwtSettings:Issuer"],
+                    ValidAudience = configuration["JwtSettings:Audience"],
+                    IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes(configuration["JwtSettings:SecretKey"])),
+                    ClockSkew = TimeSpan.Zero
+                };
+
             });
 
             return services;

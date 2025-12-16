@@ -3,6 +3,7 @@ using LinkDev.Talabat.APIs.Controllers.Errors;
 using LinkDev.Talabat.Application.Abstraction.Common;
 using LinkDev.Talabat.Application.Abstraction.Models.Products;
 using LinkDev.Talabat.Application.Abstraction.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ namespace LinkDev.Talabat.APIs.Controllers.Controllers.Products
 {
     public class ProductsController(IServiceManager serviceManager) : BaseApiController
     {
+        [Authorize/*(AuthenticationSchemes = "Bearer")*/] // the end user must be authenticated to access this endpoint 
         [HttpGet]  // GET: /api/Products
         public async Task<ActionResult<Pagination<ProductToReturnDto>>> GetProductsAsync([FromQuery] ProductSpecParams specParams)
             => Ok(await serviceManager.ProductService.GetAllProductsAsync(specParams));
